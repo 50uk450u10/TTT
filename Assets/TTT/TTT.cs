@@ -50,7 +50,7 @@ public class TTT : MonoBehaviour
                 }
             }
         }
-        
+
         if (!thingOnBoard)
         {
             ChooseSpace(0, 0);
@@ -63,16 +63,49 @@ public class TTT : MonoBehaviour
         {
             if (cells[1, 1].current == PlayerOption.NONE)
             {
-            ChooseSpace(1, 1);
-            return;
+                ChooseSpace(1, 1);
+                return;
             }
         }
         #endregion
 
         #region takeAdjacent
-        if (cells[0, 0].current == PlayerOption.X && cells[1, 1].current == PlayerOption.O)
+        if (cells[0, 0].current == PlayerOption.X && cells[0, 1].current == PlayerOption.NONE)
         {
             ChooseSpace(0, 1);
+            return;
+        }
+        #endregion
+
+        #region takeBlock
+        if (cells[0, 1].current != PlayerOption.NONE && cells[0, 2].current == PlayerOption.NONE)
+        {
+            ChooseSpace(0, 2);
+            return;
+        }
+        if (cells[0, 2].current != PlayerOption.NONE && cells[2, 0].current == PlayerOption.NONE)
+        {
+            ChooseSpace(2, 0);
+            return;
+        }
+        if (cells[0, 0].current != PlayerOption.NONE && cells[2, 0].current != PlayerOption.NONE && cells[1, 0].current == PlayerOption.NONE)
+        {
+            ChooseSpace(1, 0);
+            return;
+        }
+        if (cells[1, 0].current != PlayerOption.NONE && cells[1, 2].current == PlayerOption.NONE)
+        {
+            ChooseSpace(1, 2);
+            return;
+        }
+        if (cells[2, 1].current == PlayerOption.NONE && cells[2, 2].current == PlayerOption.NONE)
+        {
+            ChooseSpace(2, 2);
+            return;
+        }
+        else
+        {
+            ChooseSpace(2, 1);
             return;
         }
         #endregion
