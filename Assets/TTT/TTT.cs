@@ -72,8 +72,31 @@ public class TTT : MonoBehaviour
         #region takeAdjacent
         if (cells[0, 0].current == PlayerOption.X && cells[1, 1].current == PlayerOption.O)
         {
+            if(cells[0, 1].current == PlayerOption.NONE)
+            {
             ChooseSpace(0, 1);
             return;
+            }
+        }
+        #endregion
+
+        #region block
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Columns; j++)
+            {
+                if (cells[j, i].current == PlayerOption.NONE)
+                {
+                    cells[j, i].current = GetOtherPlayer();
+                    GetWinner();
+                    if (GetWinner() == GetOtherPlayer())
+                    {
+                        cells[j, i].current = PlayerOption.NONE;
+                        ChooseSpace(i, j);
+                        return;
+                    }
+                }
+            }
         }
         #endregion
     }
@@ -200,5 +223,15 @@ public class TTT : MonoBehaviour
             return PlayerOption.O;
 
         return PlayerOption.NONE;
+    }
+
+    private PlayerOption GetOtherPlayer()
+    {
+        switch (currentPlayer)
+        {
+            case PlayerOption.X: return PlayerOption.O;
+            case PlayerOption.O: return PlayerOption.X;
+            default: return PlayerOption.NONE;
+        }
     }
 }
